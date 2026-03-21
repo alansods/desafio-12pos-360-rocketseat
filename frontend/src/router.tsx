@@ -8,6 +8,7 @@ import { TransactionsPage } from '@/pages/TransactionsPage'
 import { CategoriesPage } from '@/pages/CategoriesPage'
 import { ProfilePage } from '@/pages/ProfilePage'
 
+// eslint-disable-next-line react-refresh/only-export-components
 function ProtectedRoute() {
   const { user, loading } = useAuth()
   if (loading) {
@@ -21,6 +22,7 @@ function ProtectedRoute() {
   return <Outlet />
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 function RootRoute() {
   const { user, loading } = useAuth()
   if (loading) {
