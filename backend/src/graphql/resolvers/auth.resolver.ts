@@ -74,7 +74,11 @@ export const authResolver = {
     },
 
     logout: (_: unknown, __: unknown, ctx: Context) => {
-      ctx.res.clearCookie('financy_token')
+      ctx.res.clearCookie('financy_token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+      })
       return true
     },
 
