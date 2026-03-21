@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { toast } from '@/hooks/use-toast'
 import { useQuery, useMutation } from '@apollo/client/react'
 import { Search, Plus, Trash, SquarePen, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
 import { TRANSACTIONS_QUERY } from '@/graphql/queries/transaction.queries'
@@ -122,6 +123,7 @@ export function TransactionsPage() {
   const confirmDelete = async () => {
     if (deleteTarget) {
       await deleteTx({ variables: { id: deleteTarget.id } })
+      toast({ title: 'Transação excluída', description: `"${deleteTarget.name}" foi excluída com sucesso.`, variant: 'destructive' })
       setDeleteTarget(null)
     }
   }
@@ -255,7 +257,7 @@ export function TransactionsPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-200">
                 {txPage?.items.map((tx) => (
                   <tr key={tx.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-5 py-3.5">
@@ -296,7 +298,7 @@ export function TransactionsPage() {
             </table>
 
             {txPage && (
-              <div className="flex items-center justify-between px-5 py-3 border-t border-gray-100">
+              <div className="flex items-center justify-between px-5 py-3 border-t border-gray-200">
                 <span className="text-sm text-gray-500">
                   {txPage.total > 0 ? `${start} a ${end} | ${txPage.total} resultados` : '0 resultados'}
                 </span>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { toast } from '@/hooks/use-toast'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery } from '@apollo/client/react'
@@ -66,6 +67,7 @@ export default function TransactionDialog({ open, onClose, editData }: Transacti
     },
   })
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const type = watch('type')
   const categoryId = watch('categoryId')
 
@@ -111,12 +113,15 @@ export default function TransactionDialog({ open, onClose, editData }: Transacti
       }
       if (isEdit && editData) {
         await updateTransaction({ variables: { id: editData.id, input } })
+        toast({ title: 'Transação atualizada', description: `"${data.title}" foi atualizada com sucesso.`, variant: 'success' })
       } else {
         await createTransaction({ variables: { input } })
+        toast({ title: 'Transação criada', description: `"${data.title}" foi criada com sucesso.`, variant: 'success' })
       }
       onClose()
     } catch (err) {
       console.error(err)
+      toast({ title: 'Erro ao salvar transação', description: 'Tente novamente.', variant: 'destructive' })
     }
   }
 

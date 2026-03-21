@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { toast } from '@/hooks/use-toast'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@apollo/client/react'
@@ -52,6 +53,7 @@ export function CategoryDialog({ open, onOpenChange, editData }: CategoryDialogP
     defaultValues: { name: '', color: 'blue' },
   })
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const selectedColor = watch('color')
 
   useEffect(() => {
@@ -74,13 +76,16 @@ export function CategoryDialog({ open, onOpenChange, editData }: CategoryDialogP
     try {
       if (isEdit && editData) {
         await updateCategory({ variables: { id: editData.id, input: data } })
+        toast({ title: 'Categoria atualizada', description: `"${data.name}" foi atualizada com sucesso.`, variant: 'success' })
       } else {
         await createCategory({ variables: { input: data } })
+        toast({ title: 'Categoria criada', description: `"${data.name}" foi criada com sucesso.`, variant: 'success' })
       }
       onOpenChange(false)
       reset()
     } catch (err) {
       console.error(err)
+      toast({ title: 'Erro ao salvar categoria', description: 'Tente novamente.', variant: 'destructive' })
     }
   }
 

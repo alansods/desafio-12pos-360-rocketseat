@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { toast } from '@/hooks/use-toast'
 import { useQuery, useMutation } from '@apollo/client/react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -61,7 +62,7 @@ function CategoryDialog({
   const [isEdit, setIsEdit] = useState(!!initial)
   useEffect(() => {
     if (open) setIsEdit(!!initial)
-  }, [open])
+  }, [open, initial])
   const [hoveredColor, setHoveredColor] = useState<string | null>(null)
   const [formError, setFormError] = useState<string | null>(null)
 
@@ -79,6 +80,7 @@ function CategoryDialog({
       : { name: '', color: 'green', icon: 'briefcase', description: '' },
   })
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const selectedColor = watch('color')
   const selectedIcon = watch('icon')
 
@@ -96,13 +98,16 @@ function CategoryDialog({
       setFormError(null)
       if (isEdit) {
         await updateCategory({ variables: { id: initial!.id, input: data } })
+        toast({ title: 'Categoria atualizada', description: `"${data.name}" foi atualizada com sucesso.`, variant: 'success' })
       } else {
         await createCategory({ variables: { input: data } })
+        toast({ title: 'Categoria criada', description: `"${data.name}" foi criada com sucesso.`, variant: 'success' })
       }
       handleClose()
     } catch (err: unknown) {
       const message = (err as { graphQLErrors?: { message: string }[] })?.graphQLErrors?.[0]?.message
       setFormError(message ?? 'Erro ao salvar categoria')
+      toast({ title: 'Erro ao salvar categoria', description: message ?? 'Tente novamente.', variant: 'destructive' })
     }
   }
 
@@ -169,7 +174,7 @@ function CategoryDialog({
                   style={{
                     borderColor: (selectedColor === c.value || hoveredColor === c.value) ? c.hex : undefined,
                   }}
-                  className="w-[50px] h-[30px] rounded-lg border border-gray-200 p-[5px] transition-all"
+                  className="w-12.5 h-7.5 rounded-lg border border-gray-200 p-1.25 transition-all"
                 >
                   <div className="w-full h-full rounded" style={{ backgroundColor: c.hex }} />
                 </button>
@@ -219,6 +224,7 @@ export function CategoriesPage() {
   const confirmDelete = async () => {
     if (deleteTarget) {
       await deleteCategory({ variables: { id: deleteTarget.id } })
+      toast({ title: 'Categoria excluída', description: `"${deleteTarget.name}" foi excluída com sucesso.`, variant: 'destructive' })
       setDeleteTarget(null)
     }
   }
