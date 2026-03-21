@@ -1,4 +1,59 @@
-# desafio-12pos-360-rocketseat
+# Financy — Desafio Fullstack | Pós 360 Rocketseat
+
+## Como rodar o projeto localmente
+
+### Pré-requisitos
+
+- Node.js 18+
+- npm
+
+---
+
+### Backend
+
+```bash
+cd backend
+
+# 1. Instalar dependências
+npm install
+
+# 2. Configurar variáveis de ambiente
+cp .env.example .env
+# Edite o .env e defina um valor para JWT_SECRET (ex: minha-chave-secreta)
+
+# 3. Rodar as migrations
+npm run db:migrate
+
+# 4. (Opcional) Popular o banco com dados de exemplo
+npm run db:seed
+
+# 5. Iniciar o servidor
+npm run dev
+```
+
+O servidor GraphQL estará disponível em: `http://localhost:4000/graphql`
+
+---
+
+### Frontend
+
+```bash
+cd frontend
+
+# 1. Instalar dependências
+npm install
+
+# 2. Configurar variáveis de ambiente
+cp .env.example .env
+# O .env já vem configurado com: VITE_BACKEND_URL=http://localhost:4000
+
+# 3. Iniciar a aplicação
+npm run dev
+```
+
+A aplicação estará disponível em: `http://localhost:5173`
+
+---
 
 ## Descrição do desafio
 
