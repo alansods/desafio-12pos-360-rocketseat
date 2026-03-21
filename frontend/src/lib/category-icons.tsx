@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const CATEGORY_ICONS: { name: string; icon: LucideIcon }[] = [
   { name: 'briefcase', icon: Briefcase },
   { name: 'car', icon: Car },
@@ -41,6 +42,7 @@ export const CATEGORY_ICONS: { name: string; icon: LucideIcon }[] = [
 
 const iconMap = new Map(CATEGORY_ICONS.map((i) => [i.name, i.icon]))
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function getCategoryIcon(name: string): LucideIcon {
   return iconMap.get(name) ?? Tag
 }
@@ -67,10 +69,12 @@ const solidColorMap: Record<ColorKey, string> = {
   pink: 'bg-pink-base',
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function getCategoryIconBg(color: string): string {
   return iconBgMap[color as ColorKey] ?? 'bg-gray-200 text-gray-600'
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function getCategorySolidBg(color: string): string {
   return solidColorMap[color as ColorKey] ?? 'bg-gray-400'
 }
@@ -91,12 +95,13 @@ export function CategoryIconBadge({ icon, color, size = 'md', className }: Categ
   return (
     <span
       className={cn(
-        'inline-flex items-center justify-center rounded-lg flex-shrink-0',
+        'inline-flex items-center justify-center rounded-lg shrink-0',
         sizeClass,
         bgClass,
         className,
       )}
     >
+      {/* eslint-disable-next-line react-hooks/static-components */}
       <Icon className={iconSize} />
     </span>
   )
