@@ -207,11 +207,15 @@ export default function TransactionDialog({ open, onClose, editData }: Transacti
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((cat) => (
-                  <SelectItem key={cat.id} value={cat.id}>
-                    {cat.name}
-                  </SelectItem>
-                ))}
+                {categories.length === 0 ? (
+                  <div className="px-3 py-2 text-sm text-gray-400">Nenhuma categoria criada</div>
+                ) : (
+                  categories.map((cat) => (
+                    <SelectItem key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
             {errors.categoryId && (
